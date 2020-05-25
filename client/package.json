@@ -1,0 +1,9 @@
+{
+  "name": "auth-login-client",
+  "version": "1.0.0",
+  "description": "hznu project.(group: yqm, hsy, jsw, lfy)",
+  "main": "src/index.js",
+  "repository": "https://github.com/HytonightYX/auth-login",
+  "author": "HytonightYX.hsy",
+  "license": "MIT"
+}

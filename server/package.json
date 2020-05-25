@@ -1,0 +1,12 @@
+{
+  "name": "auth-login-server",
+  "version": "1.0.0",
+  "description": "hznu project.(group: yqm, hsy, jsw, lfy)",
+  "main": "index.js",
+  "repository": "https://github.com/HytonightYX/auth-login",
+  "author": "HytonightYX.hsy",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  }
+}

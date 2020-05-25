@@ -1,2 +1,9 @@
 # auth-login
-hznu 
+
+hznu
+
+## base on password
+
+## base on pin(verification code)
+
+## base on CA

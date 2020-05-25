@@ -1,0 +1,9 @@
+**/.idea
+**/.vscode
+**/.DS_Store
+**/yarn.lock
+**/package-lock.json
+**/node_modules/
+
+# secret.js should not push to github!
+**/secret.js
