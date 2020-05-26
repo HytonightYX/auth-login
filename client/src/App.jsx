@@ -1,8 +1,13 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
-import { UserOutlined, LockOutlined, MobileOutlined, ContainerOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Form, Input, Button } from 'antd';
+import {
+  UserOutlined,
+  LockOutlined,
+  MobileOutlined,
+  ContainerOutlined,
+} from '@ant-design/icons';
 
-import "./style.less";
+import './style.less';
 
 const LOGIN_TYPE = {
   PWD: 1,
@@ -22,39 +27,49 @@ class Login extends React.Component {
   render() {
     const { type } = this.state;
     return (
-      <div className='form-warp'>
+      <div className="form-warp">
         {type === LOGIN_TYPE.PWD && (
-          <Form className='login-form' onFinish={this.onFinish}>
-            <Form.Item name='username' rules={[{ required: true, message: "请输入用户名" }]}>
+          <Form className="login-form" onFinish={this.onFinish}>
+            <Form.Item
+              name="username"
+              rules={[{ required: true, message: '请输入用户名' }]}
+            >
               <Input
-                prefix={<UserOutlined className='site-form-item-icon' />}
-                placeholder='用户名'
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="用户名"
               />
             </Form.Item>
-            <Form.Item name='password' rules={[{ required: true, message: "请输入密码" }]}>
+            <Form.Item
+              name="password"
+              rules={[{ required: true, message: '请输入密码' }]}
+            >
               <Input
-                prefix={<LockOutlined className='site-form-item-icon' />}
-                type='password'
-                placeholder='密码'
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="密码"
               />
             </Form.Item>
 
             <Form.Item>
-              <Button type='primary' htmlType='submit' className='login-form-button'>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
                 登陆
               </Button>
             </Form.Item>
           </Form>
         )}
 
-        <div className='more'>
+        <div className="more">
           <div>
-            <MobileOutlined style={{ fontSize: "26px" }} />
+            <MobileOutlined style={{ fontSize: '26px' }} />
             <span>手机验证码</span>
           </div>
 
           <div>
-            <ContainerOutlined style={{ fontSize: "26px" }} />
+            <ContainerOutlined style={{ fontSize: '26px' }} />
             <span>数字证书</span>
           </div>
         </div>
@@ -66,7 +81,7 @@ class Login extends React.Component {
 class App extends React.Component {
   render() {
     return (
-      <div className='g'>
+      <div className="g">
         <Login />
       </div>
     );

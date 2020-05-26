@@ -6,6 +6,6 @@ const conf = {
   password: require('./secret').mysql_pwd,
   multipleStatements: true,
   secret: 'lorem',
-}
+};
 
-module.exports = conf
+module.exports = conf;
