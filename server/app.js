@@ -30,7 +30,8 @@ app.get('/test', async (req, res) => {
  * 登录
 */
 app.post('/login', async (req, res) => {
-  const data = await db.memberList();
+  const data = await db.userLogin();
+  console.log(data);
   res.status(200).json(data);
 });
 
