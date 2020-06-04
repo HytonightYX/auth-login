@@ -63,9 +63,9 @@ const postListSimple = async () => {
 const postCreate = async (params) => {
   const time = dayjs(Date.now()).format('YYYYMMDDhhmmss');
   const [rows, fields] = await pool.query(`
-		INSERT INTO post (cover, title, html, raw, status, create_time) 
-		VALUES (?, ?, ?, ?, ?, ?)
-	`, [params.cover, params.title, params.html, params.raw, 0, time]);
+    INSERT INTO post (cover, title, html, raw, status, create_time) 
+    VALUES (?, ?, ?, ?, ?, ?)`,
+  [params.cover, params.title, params.html, params.raw, 0, time]);
   return rows || [];
 };
 
