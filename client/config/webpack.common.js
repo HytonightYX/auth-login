@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
+
 const resolve = (relatedPath) => path.join(__dirname, relatedPath);
 
 module.exports = {
@@ -31,6 +32,9 @@ module.exports = {
             options: {
               lessOptions: {
                 strictMath: true,
+              },
+              modifyVars: {
+                'primary-color': '#424143',
               },
               javascriptEnabled: true
             },
