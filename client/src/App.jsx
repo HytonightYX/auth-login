@@ -5,6 +5,7 @@ import {
   LockOutlined,
   MobileOutlined,
   ContainerOutlined,
+  FontColorsOutlined,
 } from '@ant-design/icons';
 
 import './style.less';
@@ -46,7 +47,7 @@ class Login extends React.Component {
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="密码"
+                placeholder="口令"
               />
             </Form.Item>
 
@@ -64,12 +65,17 @@ class Login extends React.Component {
 
         <div className="more">
           <div>
-            <MobileOutlined style={{ fontSize: '26px' }} />
+            <MobileOutlined />
+            <span>口令登录</span>
+          </div>
+
+          <div>
+            <FontColorsOutlined />
             <span>手机验证码</span>
           </div>
 
           <div>
-            <ContainerOutlined style={{ fontSize: '26px' }} />
+            <ContainerOutlined />
             <span>数字证书</span>
           </div>
         </div>
