@@ -1,13 +1,7 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
-import {
-  UserOutlined,
-  LockOutlined,
-  MobileOutlined,
-  ContainerOutlined,
-  FontColorsOutlined,
-} from '@ant-design/icons';
+import { MobileOutlined, ContainerOutlined, UsbOutlined } from '@ant-design/icons';
 
+import PasswordLogin from './forms/PasswordLogin';
 import './style.less';
 
 const LOGIN_TYPE = {
@@ -29,39 +23,7 @@ class Login extends React.Component {
     const { type } = this.state;
     return (
       <div className="form-warp">
-        {type === LOGIN_TYPE.PWD && (
-          <Form className="login-form" onFinish={this.onFinish}>
-            <Form.Item
-              name="username"
-              rules={[{ required: true, message: '请输入用户名' }]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="用户名"
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: '请输入密码' }]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="口令"
-              />
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                登陆
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
+        {type === LOGIN_TYPE.PWD && <PasswordLogin />}
 
         <div className="more">
           <div>
@@ -77,6 +39,11 @@ class Login extends React.Component {
           <div>
             <ContainerOutlined />
             <span>数字证书</span>
+          </div>
+
+          <div>
+            <UsbOutlined style={{ fontSize: '21px' }} />
+            <span>密码钥匙</span>
           </div>
         </div>
       </div>
