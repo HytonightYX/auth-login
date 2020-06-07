@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   return (
     <Form
-      className="sms-form"
+      className="sms-form login-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >

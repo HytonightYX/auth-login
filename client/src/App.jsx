@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Divider } from 'antd';
 import { MobileOutlined, UsbOutlined, ApiOutlined } from '@ant-design/icons';
 
 import PWDLoginForm from './forms/PWDLogin';
@@ -54,9 +55,12 @@ class Login extends React.Component {
 
         {type !== LOGIN_TYPE.REG && (
           <>
-            <div>
+            <div className="reg">
               <a onClick={this.toRegister}>现在注册？</a>
             </div>
+            <Divider plain>
+              <span style={{ color: '#d9d9d9', fontSize: 16 }}>or</span>
+            </Divider>
             <div className="more">
               <div onClick={this.toPWDLogin}>
                 <ApiOutlined />
