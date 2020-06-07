@@ -35,4 +35,17 @@ app.post('/login', async (req, res) => {
   res.status(200).json(data);
 });
 
+/**
+ * 注册
+ */
+app.post('/register', async (req, res) => {
+  try {
+    const data = await db.userRegister(req.body);
+    console.log(data);
+    res.status(200).json({ code: 200, data, msg: '注册成功' });
+  } catch (e) {
+    res.status(200).json({ code: 500, data: e, msg: '注册失败请重试' });
+  }
+});
+
 app.listen(port, () => console.log(`> Running on localhost:${port}`));
