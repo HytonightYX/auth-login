@@ -1,9 +1,11 @@
 /**
- * USBKey 登陆
+ * 口令登陆
  */
 import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const Form = () => {
+const LoginForm = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -47,4 +49,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default LoginForm;

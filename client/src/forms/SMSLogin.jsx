@@ -2,8 +2,11 @@
  * 短信验证码登陆
  */
 import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import './style.less';
 
-const Form = () => {
+const LoginForm = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -12,9 +15,15 @@ const Form = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const getCodeButton = (
+    <Form.Item name="prefix" noStyle>
+      <Button>获取验证码</Button>
+    </Form.Item>
+  );
+
   return (
     <Form
-      className="login-form"
+      className="sms-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
@@ -34,7 +43,8 @@ const Form = () => {
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="密码"
+          addonAfter={<Button>获取验证码</Button>}
+          placeholder="验证码"
         />
       </Form.Item>
 
@@ -47,4 +57,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default LoginForm;

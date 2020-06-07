@@ -1,11 +1,11 @@
 /**
- * 口令登陆
+ * USBKey 登陆
  */
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import {
-  UserOutlined,
-  LockOutlined
+  LockOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 
 const LoginForm = () => {
