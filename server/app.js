@@ -30,9 +30,13 @@ app.get('/test', async (req, res) => {
  * 登录
 */
 app.post('/login', async (req, res) => {
-  const data = await db.userLogin();
-  console.log(data);
-  res.status(200).json(data);
+  try {
+    const { username, password } = req.body;
+    const result = await db.passwordLogin(username, password);
+    res.status(200).json({ code: 200, result, msg: '登录' });
+  } catch (e) {
+    res.status(200).json({ code: 500, data: e.toString(), msg: '登录失败请重试' });
+  }
 });
 
 /**

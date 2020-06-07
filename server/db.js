@@ -14,18 +14,21 @@ const { generateAuth, validatePassword } = require('./util');
 
 const pool = mysql.createPool(conf);
 
-async function findUser() {
-  const result = await pool.query('SELECT * FROM user');
-  if (result[0].length < 1) {
+async function findUser(username) {
+  const result = await pool.query('SELECT * FROM user WHERE ?', [username]);
+  if (result.length < 1) {
     throw new Error('用户未找到');
   }
   return result[0][0];
 }
 
 const passwordLogin = async (username, password) => {
-  const dbuser = await findUser(username);
-  if (validatePassword(dbuser, password)) {
-    return { username };
+  const query = await pool.query('SELECT * FROM user WHERE username = ? LIMIT 1', [username]);
+  if (query[0][0]) {
+    const dbuser = query[0][0];
+    if (validatePassword(dbuser, password)) {
+      return { username };
+    }
   }
   throw new Error('密码错误');
 };
@@ -36,6 +39,7 @@ const passwordLogin = async (username, password) => {
  */
 const userRegister = async (params) => {
   const { salt, hash } = generateAuth(params.password);
+  console.log(salt, hash);
   const userParams = {
     username: params.username,
     phone: params.phone,
