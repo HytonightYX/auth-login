@@ -1,5 +1,10 @@
 import React from 'react';
-import { MobileOutlined, ContainerOutlined, UsbOutlined } from '@ant-design/icons';
+import {
+  MobileOutlined,
+  ContainerOutlined,
+  UsbOutlined,
+  FontColorsOutlined,
+} from '@ant-design/icons';
 
 import PasswordLogin from './forms/PasswordLogin';
 import './style.less';
@@ -42,7 +47,7 @@ class Login extends React.Component {
           </div>
 
           <div>
-            <UsbOutlined style={{ fontSize: '21px' }} />
+            <UsbOutlined />
             <span>密码钥匙</span>
           </div>
         </div>
