@@ -1,14 +1,17 @@
 /**
  * 短信验证码登陆
  */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import './style.less';
 
-const LoginForm = () => {
+const LoginForm = ({ doLogin, type }) => {
+  const [pending, setPending] = useState(false);
+
   const onFinish = (values) => {
     console.log('Success:', values);
+    doLogin({ ...values, type });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -28,17 +31,17 @@ const LoginForm = () => {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: '请输入用户名' }]}
+        name="phone"
+        rules={[{ required: true, message: '请输入手机号' }]}
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="用户名"
+          placeholder="手机号码"
         />
       </Form.Item>
       <Form.Item
-        name="password"
-        rules={[{ required: true, message: '请输入密码' }]}
+        name="code"
+        rules={[{ required: true, message: '请输入验证码' }]}
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
@@ -56,5 +59,25 @@ const LoginForm = () => {
     </Form>
   );
 };
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // 保存新回调
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  // 建立 interval
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 export default LoginForm;

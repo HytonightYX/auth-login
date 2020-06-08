@@ -9,6 +9,8 @@ const conf = {
 };
 
 const mysql = require('mysql2/promise');
+const axios = require('axios');
+const { sendSMS } = require('./util');
 
 const { generateAuth, validatePassword } = require('./util');
 
@@ -23,6 +25,21 @@ const passwordLogin = async (username, password) => {
     }
   }
   throw new Error('用户名或密码错误');
+};
+
+const smsCodeLogin = async (phone, code) => {
+
+};
+
+const sendSmsCode = async (phone) => {
+  const res = await axios.get('https://crypto.hznuhub.net/dev-api/random/true/6');
+  let code = 'D2F1C41441C9';
+  if (res && res.status === 200 && res.data.code === 100) {
+    code = res.data.data;
+  }
+  console.log(code);
+  const result = await sendSMS(phone, code);
+  return result;
 };
 
 /**
@@ -47,4 +64,6 @@ const userRegister = async (params) => {
 module.exports = {
   passwordLogin,
   userRegister,
+  smsCodeLogin,
+  sendSmsCode,
 };

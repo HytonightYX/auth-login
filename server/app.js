@@ -31,9 +31,29 @@ app.get('/test', async (req, res) => {
 */
 app.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const result = await db.passwordLogin(username, password);
-    res.status(200).json({ code: 200, result, msg: '登录' });
+    const { type } = req.body;
+    if (type === 1) {
+      const { username, password } = req.body;
+      const result = await db.passwordLogin(username, password);
+      res.status(200).json({ code: 200, result, msg: '登录成功' });
+    }
+
+    if (type === 2) {
+      const { phone, code } = req.body;
+      const result = await db.SmsCodeLogin(phone, code);
+      res.status(200).json({ code: 200, data: result, msg: '登录成功' });
+    }
+  } catch (e) {
+    res.status(200).json({ code: 500, data: {}, msg: e.toString() });
+  }
+});
+
+app.get('/smscode', async (req, res) => {
+  try {
+    const { phone } = req.query;
+    console.log(phone);
+    const result = await db.sendSmsCode(phone);
+    res.status(200).json({ code: 200, data: result, msg: '发送成功' });
   } catch (e) {
     res.status(200).json({ code: 500, data: {}, msg: e.toString() });
   }
