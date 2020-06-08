@@ -35,7 +35,7 @@ app.post('/login', async (req, res) => {
     const result = await db.passwordLogin(username, password);
     res.status(200).json({ code: 200, result, msg: '登录' });
   } catch (e) {
-    res.status(200).json({ code: 500, data: e.toString(), msg: '登录失败请重试' });
+    res.status(200).json({ code: 500, data: {}, msg: e.toString() });
   }
 });
 

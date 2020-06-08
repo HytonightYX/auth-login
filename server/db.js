@@ -14,14 +14,6 @@ const { generateAuth, validatePassword } = require('./util');
 
 const pool = mysql.createPool(conf);
 
-async function findUser(username) {
-  const result = await pool.query('SELECT * FROM user WHERE ?', [username]);
-  if (result.length < 1) {
-    throw new Error('用户未找到');
-  }
-  return result[0][0];
-}
-
 const passwordLogin = async (username, password) => {
   const query = await pool.query('SELECT * FROM user WHERE username = ? LIMIT 1', [username]);
   if (query[0][0]) {
@@ -30,7 +22,7 @@ const passwordLogin = async (username, password) => {
       return { username };
     }
   }
-  throw new Error('密码错误');
+  throw new Error('用户名或密码错误');
 };
 
 /**

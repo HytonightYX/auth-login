@@ -16,6 +16,9 @@ const RegisterForm = () => {
         const inner = data.data;
         if (data.code === 200) {
           message.success('注册成功');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 500);
         } else {
           if (inner.code === 'ER_DUP_ENTRY') {
             message.error(`用户名或手机号已存在`, 0.7);
