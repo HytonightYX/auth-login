@@ -3,14 +3,12 @@
  */
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-import {
-  LockOutlined,
-  UserOutlined
-} from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
-const LoginForm = () => {
+const LoginForm = ({doLogin, type}) => {
   const onFinish = (values) => {
     console.log('Success:', values);
+    doLogin({...values, type})
   };
 
   const onFinishFailed = (errorInfo) => {

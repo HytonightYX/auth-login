@@ -20,7 +20,7 @@ const LoginForm = ({ doLogin, type }) => {
 
   const getCodeButton = (
     <Form.Item name="prefix" noStyle>
-      <Button>获取验证码</Button>
+      <Button >获取验证码</Button>
     </Form.Item>
   );
 

@@ -7,7 +7,7 @@ import { UserOutlined, LockOutlined, MobileOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import api from '../api';
 
-const RegisterForm = () => {
+const RegisterForm = ({doLogin}) => {
   const onFinish = (values) => {
     axios.post(api.REGISTER, values).then((res) => {
       console.log(res);
