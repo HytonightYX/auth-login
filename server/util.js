@@ -10,10 +10,6 @@ function generateAuth(password) {
 
 function validatePassword(dbuser, p) {
   const hash = crypto.pbkdf2Sync(p, dbuser.salt, 1000, 64, 'sha256').toString('hex');
-  console.log('=======');
-  console.log(p);
-  console.log(dbuser);
-  console.log('hash2', hash);
   return dbuser.hash === hash;
 }
 
@@ -24,7 +20,7 @@ async function sendSMS(phone, code) {
   params.number = phone;
   params.templateParams = [code, '5分钟'];
   const res = await client.send(params);
-  console.log(res);
+  return res;
 }
 
 module.exports = {

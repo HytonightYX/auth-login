@@ -48,12 +48,15 @@ app.post('/login', async (req, res) => {
   }
 });
 
+/**
+ * 获取验证码接口
+ */
 app.get('/smscode', async (req, res) => {
   try {
     const { phone } = req.query;
     console.log(phone);
     const result = await db.sendSmsCode(phone);
-    res.status(200).json({ code: 200, data: result, msg: '发送成功' });
+    res.status(200).json({ code: 200, data: result, msg: '发送成功，5分钟内有效～' });
   } catch (e) {
     res.status(200).json({ code: 500, data: {}, msg: e.toString() });
   }

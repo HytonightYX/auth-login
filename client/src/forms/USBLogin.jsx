@@ -1,14 +1,18 @@
 /**
  * USBKey 登陆
  */
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Select } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import USB_GIF from './usb.gif';
 
-const LoginForm = ({doLogin, type}) => {
+const LoginForm = ({ doLogin, type }) => {
+  const [detecting, setDetecting] = useState(false);
+
   const onFinish = (values) => {
     console.log('Success:', values);
-    doLogin({...values, type})
+    setDetecting(true);
+    doLogin({ ...values, type });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -21,30 +25,18 @@ const LoginForm = ({doLogin, type}) => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: '请输入用户名' }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="用户名"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: '请输入密码' }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="密码"
-        />
-      </Form.Item>
+      {detecting && <img src={USB_GIF} alt="detecting..." style={{height: 128, width: 128}} />}
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          登陆
-        </Button>
+        {!detecting && (
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            检测USBKey并登录
+          </Button>
+        )}
       </Form.Item>
     </Form>
   );

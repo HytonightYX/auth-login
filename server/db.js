@@ -9,10 +9,11 @@ const conf = {
 };
 
 const mysql = require('mysql2/promise');
+const NodeCache = require('node-cache');
 const axios = require('axios');
-const { sendSMS } = require('./util');
+const { sendSMS, generateAuth, validatePassword } = require('./util');
 
-const { generateAuth, validatePassword } = require('./util');
+const nodeCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 const pool = mysql.createPool(conf);
 
@@ -32,7 +33,7 @@ const smsCodeLogin = async (phone, code) => {
 };
 
 const sendSmsCode = async (phone) => {
-  const res = await axios.get('https://crypto.hznuhub.net/dev-api/random/true/6');
+  const res = await axios.get('https://crypto.hznuhub.net/dev-api/random/true/2');
   let code = 'D2F1C41441C9';
   if (res && res.status === 200 && res.data.code === 100) {
     code = res.data.data;
