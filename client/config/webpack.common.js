@@ -39,7 +39,15 @@ module.exports = {
               javascriptEnabled: true
             },
           }]
-      }
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader'
+          },
+        ],
+      },
     ]
   },
   resolve: {
