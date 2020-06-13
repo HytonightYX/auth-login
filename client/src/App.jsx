@@ -19,7 +19,7 @@ const LOGIN_TYPE = {
 
 class Login extends React.Component {
   state = {
-    type: LOGIN_TYPE.USB,
+    type: LOGIN_TYPE.SMS,
   };
 
   onFinish = (values) => {
@@ -27,22 +27,18 @@ class Login extends React.Component {
   };
 
   toPWDLogin = () => {
-    console.log('toPWDLogin');
     this.setState({ type: LOGIN_TYPE.PWD });
   };
 
   toSMSLogin = () => {
-    console.log('toSMSLogin');
     this.setState({ type: LOGIN_TYPE.SMS });
   };
 
   toUSBLogin = () => {
-    console.log('toUSBLogin');
     this.setState({ type: LOGIN_TYPE.USB });
   };
 
   toRegister = () => {
-    console.log('toRegister');
     this.setState({ type: LOGIN_TYPE.REG });
   };
 

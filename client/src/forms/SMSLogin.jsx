@@ -14,7 +14,7 @@ const LoginForm = ({ doLogin, type }) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    doLogin({ ...values, type });
+    // doLogin({ ...values, type });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,7 +22,6 @@ const LoginForm = ({ doLogin, type }) => {
   };
 
   const getSmsCode = (phone) => {
-    
     Axios.get(`${api.SMSCODE}?phone=${phone}`).then((res) => {
       console.log(res.data.data);
       if (res && res.status === 200 && res.data.data.code === 0) {
@@ -52,18 +51,19 @@ const LoginForm = ({ doLogin, type }) => {
         />
       </Form.Item>
 
-      <Form.Item
-        name="code"
-        rules={[{ required: true, message: '请输入验证码' }]}
-        className="code-input"
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="text"
-          placeholder="验证码"
-        />
+      <div className="code-input">
+        <Form.Item
+          name="code"
+          rules={[{ required: true, message: '请输入验证码' }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="text"
+            placeholder="验证码"
+          />
+        </Form.Item>
         <Button onClick={getSmsCode.bind(null, phone)}>获取验证码</Button>
-      </Form.Item>
+      </div>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
