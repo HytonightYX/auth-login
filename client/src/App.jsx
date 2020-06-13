@@ -19,7 +19,7 @@ const LOGIN_TYPE = {
 
 class Login extends React.Component {
   state = {
-    type: LOGIN_TYPE.SMS,
+    type: LOGIN_TYPE.USB,
   };
 
   onFinish = (values) => {
@@ -73,11 +73,14 @@ class Login extends React.Component {
         )}
         {type === LOGIN_TYPE.REG && <RegisterForm />}
 
+        {type !== LOGIN_TYPE.REG && type !== LOGIN_TYPE.USB && (
+          <div className="reg">
+            <a onClick={this.toRegister}>现在注册？</a>
+          </div>
+        )}
+
         {type !== LOGIN_TYPE.REG && (
           <>
-            <div className="reg">
-              <a onClick={this.toRegister}>现在注册？</a>
-            </div>
             <Divider plain>
               <span style={{ color: '#d9d9d9', fontSize: 16 }}>or</span>
             </Divider>

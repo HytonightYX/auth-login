@@ -7,8 +7,9 @@ const resolve = (relatedPath) => path.join(__dirname, relatedPath);
 
 module.exports = smart(webpackCommonConf, {
   mode: 'development',
-  devServer: { // 本地服务配置
+  devServer: {
     port: 9000,
+    host: '0.0.0.0',
     hot: true,
     open: true,
     historyApiFallback: true,

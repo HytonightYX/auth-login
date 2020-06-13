@@ -1,4 +1,5 @@
-const base = 'http://localhost:8000';
+// const base = 'http://localhost:8000';
+const base = 'http://192.168.50.191:8000';
 const REGISTER = base + '/register';
 const LOGIN = base + '/login';
 

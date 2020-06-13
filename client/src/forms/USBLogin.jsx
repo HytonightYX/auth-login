@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { enumDevice } from '../lib';
+import './style.less';
 
 const LoginForm = ({ doLogin, type }) => {
   const [detecting, setDetecting] = useState(false);
@@ -14,7 +15,6 @@ const LoginForm = ({ doLogin, type }) => {
     setDetecting(true);
     // doLogin({ ...values, type });
     const id = await enumDevice();
-    console.log(id);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -23,23 +23,31 @@ const LoginForm = ({ doLogin, type }) => {
 
   return (
     <Form
-      className="login-form"
+      className="login-form usb-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-      {detecting && <Spin indicator={<LoadingOutlined />} />}
-
-      {!detecting && (
+      <div className="span-warp">
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            检测USBKey并登录
-          </Button>
+          {detecting && (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 50 }} />}
+              tip="Loading..."
+              className="span"
+            />
+          )}
+
+          {!detecting && (
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              检测USBKey并登录
+            </Button>
+          )}
         </Form.Item>
-      )}
+      </div>
     </Form>
   );
 };
