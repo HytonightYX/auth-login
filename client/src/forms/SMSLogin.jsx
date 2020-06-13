@@ -8,9 +8,22 @@ import './style.less';
 import api from '../api';
 import axios from 'axios';
 
+const CODE_TTL = 60;
+
 const LoginForm = ({ doLogin, type }) => {
-  const [pending, setPending] = useState(false);
+  const [seconds, setSeconds] = useState(0);
   const [phone, setPhone] = useState('');
+  const interval = useRef();
+
+  useEffect(() => {
+    if (!seconds) return;
+
+    interval.current = setInterval(() => {
+      setSeconds((s) => s - 1);
+    }, 1000);
+
+    return () => clearInterval(interval.current);
+  }, [seconds]);
 
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -26,6 +39,7 @@ const LoginForm = ({ doLogin, type }) => {
       console.log(res.data.data);
       if (res && res.status === 200 && res.data.data.code === 0) {
         message.success(res.data.data.data);
+        setSeconds(CODE_TTL);
       } else if (res.data.data.code !== 0) {
         message.error(res.data.data.data);
       } else {
@@ -62,7 +76,9 @@ const LoginForm = ({ doLogin, type }) => {
             placeholder="验证码"
           />
         </Form.Item>
-        <Button onClick={getSmsCode.bind(null, phone)}>获取验证码</Button>
+        <Button onClick={getSmsCode.bind(null, phone)} disabled={seconds > 0}>
+          {seconds > 0 ? `剩余 ${seconds} 秒` : '获取验证码'}
+        </Button>
       </div>
 
       <Form.Item>

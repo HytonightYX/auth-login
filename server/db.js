@@ -13,7 +13,7 @@ const NodeCache = require('node-cache');
 const axios = require('axios');
 const { sendSMS, generateAuth, validatePassword } = require('./util');
 
-const nodeCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
+const nodeCache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
 const pool = mysql.createPool(conf);
 
@@ -22,14 +22,28 @@ const passwordLogin = async (username, password) => {
   if (query[0][0]) {
     const dbuser = query[0][0];
     if (validatePassword(dbuser, password)) {
-      return { username };
+      return dbuser;
     }
   }
   throw new Error('用户名或密码错误');
 };
 
 const smsCodeLogin = async (phone, code) => {
-
+  console.log('recived', phone, code);
+  const exist = nodeCache.has(phone);
+  if (exist) {
+    const cachedCode = nodeCache.get(phone);
+    if (cachedCode === code) {
+      const query = await pool.query('SELECT * FROM user WHERE phone = ? LIMIT 1', [phone]);
+      if (query[0][0]) {
+        nodeCache.del(phone);
+        return query[0][0];
+      }
+      throw new Error('未知手机号,新用户请先注册~');
+    }
+    throw new Error('验证码错误');
+  }
+  throw new Error('验证码已过期或被使用');
 };
 
 const sendSmsCode = async (phone) => {
@@ -38,8 +52,9 @@ const sendSmsCode = async (phone) => {
   if (res && res.status === 200 && res.data.code === 100) {
     code = res.data.data;
   }
-  console.log(code);
+
   const result = await sendSMS(phone, code);
+  nodeCache.set(phone, code);
   return result;
 };
 

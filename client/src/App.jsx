@@ -22,10 +22,6 @@ class Login extends React.Component {
     type: LOGIN_TYPE.SMS,
   };
 
-  onFinish = (values) => {
-    console.log(values);
-  };
-
   toPWDLogin = () => {
     this.setState({ type: LOGIN_TYPE.PWD });
   };
@@ -42,12 +38,17 @@ class Login extends React.Component {
     this.setState({ type: LOGIN_TYPE.REG });
   };
 
+  success(content) {
+    Modal.success({
+      content
+    });
+  }
+
   doLogin = (params) => {
     axios.post(api.LOGIN, params).then((res) => {
       if (res && res.status === 200 && res.data.code === 200) {
-        const user = res.data.data
-        console.log(user);
-
+        const user = res.data.data;
+        this.success(`${user.username}, 登录成功`)
       } else if (res.data) {
         message.error(`${res.data.msg}`);
       } else {

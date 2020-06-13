@@ -7,6 +7,13 @@ const db = require('./db');
 const app = express();
 const port = 8000;
 
+const LOGIN_TYPE = {
+  PWD: 1,
+  SMS: 2,
+  USB: 3,
+  REG: -1,
+};
+
 app.use(compression());
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -32,15 +39,15 @@ app.get('/test', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const { type } = req.body;
-    if (type === 1) {
+    if (type === LOGIN_TYPE.PWD) {
       const { username, password } = req.body;
       const result = await db.passwordLogin(username, password);
-      res.status(200).json({ code: 200, result, msg: '登录成功' });
+      res.status(200).json({ code: 200, data: result, msg: '登录成功' });
     }
 
-    if (type === 2) {
+    if (type === LOGIN_TYPE.SMS) {
       const { phone, code } = req.body;
-      const result = await db.SmsCodeLogin(phone, code);
+      const result = await db.smsCodeLogin(phone, code);
       res.status(200).json({ code: 200, data: result, msg: '登录成功' });
     }
   } catch (e) {
