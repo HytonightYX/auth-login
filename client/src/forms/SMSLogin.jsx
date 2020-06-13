@@ -55,15 +55,14 @@ const LoginForm = ({ doLogin, type }) => {
       <Form.Item
         name="code"
         rules={[{ required: true, message: '请输入验证码' }]}
+        className="code-input"
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          addonAfter={
-            <Button onClick={getSmsCode.bind(null, phone)}>获取验证码</Button>
-          }
+          type="text"
           placeholder="验证码"
         />
+        <Button onClick={getSmsCode.bind(null, phone)}>获取验证码</Button>
       </Form.Item>
 
       <Form.Item>
