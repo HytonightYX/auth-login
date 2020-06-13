@@ -2,17 +2,19 @@
  * USBKey 登陆
  */
 import React, { useState } from 'react';
-import { Form, Input, Button, Select } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import USB_GIF from './usb.gif';
+import { Form, Input, Button, Select, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { enumDevice } from '../lib';
 
 const LoginForm = ({ doLogin, type }) => {
   const [detecting, setDetecting] = useState(false);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Success:', values);
     setDetecting(true);
-    doLogin({ ...values, type });
+    // doLogin({ ...values, type });
+    const id = await enumDevice();
+    console.log(id);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -25,10 +27,10 @@ const LoginForm = ({ doLogin, type }) => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-      {detecting && <img src={USB_GIF} alt="detecting..." style={{height: 128, width: 128}} />}
+      {detecting && <Spin indicator={<LoadingOutlined />} />}
 
-      <Form.Item>
-        {!detecting && (
+      {!detecting && (
+        <Form.Item>
           <Button
             type="primary"
             htmlType="submit"
@@ -36,8 +38,8 @@ const LoginForm = ({ doLogin, type }) => {
           >
             检测USBKey并登录
           </Button>
-        )}
-      </Form.Item>
+        </Form.Item>
+      )}
     </Form>
   );
 };
