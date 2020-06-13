@@ -8,3 +8,4 @@
 # secret.js should not push to github!
 **/secret.js
 client/yarn-error.log
+local/
