@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Divider, message } from 'antd';
-import { MobileOutlined, UsbOutlined, ApiOutlined } from '@ant-design/icons';
+import { Divider, message, Modal } from 'antd';
+import { MobileOutlined, UsbOutlined, LockOutlined } from '@ant-design/icons';
 
 import PWDLoginForm from './forms/PWDLogin';
 import SMSLoginForm from './forms/SMSLogin';
@@ -45,7 +45,9 @@ class Login extends React.Component {
   doLogin = (params) => {
     axios.post(api.LOGIN, params).then((res) => {
       if (res && res.status === 200 && res.data.code === 200) {
-        message.success('登陆成功', 0.7);
+        const user = res.data.data
+        console.log(user);
+
       } else if (res.data) {
         message.error(`${res.data.msg}`);
       } else {
@@ -69,7 +71,7 @@ class Login extends React.Component {
         )}
         {type === LOGIN_TYPE.REG && <RegisterForm />}
 
-        {type !== LOGIN_TYPE.REG && type !== LOGIN_TYPE.USB && (
+        {type !== LOGIN_TYPE.REG && (
           <div className="reg">
             <a onClick={this.toRegister}>现在注册？</a>
           </div>
@@ -82,7 +84,7 @@ class Login extends React.Component {
             </Divider>
             <div className="more">
               <div onClick={this.toPWDLogin}>
-                <ApiOutlined />
+                <LockOutlined />
                 <span>口令登录</span>
               </div>
 

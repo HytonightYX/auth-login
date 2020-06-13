@@ -2,8 +2,8 @@
  * USBKey 登陆
  */
 import React, { useState } from 'react';
-import { Form, Input, Button, Select, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Form, Button, Spin } from 'antd';
+import { LoadingOutlined, UsbOutlined } from '@ant-design/icons';
 import { enumDevice } from '../lib';
 import './style.less';
 
@@ -43,6 +43,7 @@ const LoginForm = ({ doLogin, type }) => {
               htmlType="submit"
               className="login-form-button"
             >
+              <UsbOutlined />
               检测USBKey并登录
             </Button>
           )}

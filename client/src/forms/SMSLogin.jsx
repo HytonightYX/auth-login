@@ -3,10 +3,10 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { MobileOutlined, UserOutlined } from '@ant-design/icons';
 import './style.less';
 import api from '../api';
-import Axios from 'axios';
+import axios from 'axios';
 
 const LoginForm = ({ doLogin, type }) => {
   const [pending, setPending] = useState(false);
@@ -14,7 +14,7 @@ const LoginForm = ({ doLogin, type }) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    // doLogin({ ...values, type });
+    doLogin({ ...values, type });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,7 +22,7 @@ const LoginForm = ({ doLogin, type }) => {
   };
 
   const getSmsCode = (phone) => {
-    Axios.get(`${api.SMSCODE}?phone=${phone}`).then((res) => {
+    axios.get(`${api.SMSCODE}?phone=${phone}`).then((res) => {
       console.log(res.data.data);
       if (res && res.status === 200 && res.data.data.code === 0) {
         message.success(res.data.data.data);
@@ -57,7 +57,7 @@ const LoginForm = ({ doLogin, type }) => {
           rules={[{ required: true, message: '请输入验证码' }]}
         >
           <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<MobileOutlined className="site-form-item-icon" />}
             type="text"
             placeholder="验证码"
           />
