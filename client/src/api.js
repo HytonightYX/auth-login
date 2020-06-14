@@ -1,6 +1,6 @@
 // const base = 'http://localhost:8000';
 const dev = process.env.NODE_ENV === 'development'
-const base = dev ? '//dev.yunxi.site:8000' : '//101.37.14.191';
+const base = dev ? '//dev.yunxi.site:8000' : '//101.37.14.191:8000';
 const REGISTER = base + '/register';
 const LOGIN = base + '/login';
 

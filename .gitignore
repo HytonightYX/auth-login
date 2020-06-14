@@ -4,6 +4,8 @@
 **/yarn.lock
 **/package-lock.json
 **/node_modules/
+**/.cache
+**/dist
 
 # secret.js should not push to github!
 **/secret.js

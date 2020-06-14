@@ -116,7 +116,9 @@ function App() {
       <Login />
 
       <div className="fix-bottom">
-        <a href="https://github.com/HytonightYX/auth-login" target="_blank" style={{fontSize: 26, color: '#333333'}}><GithubFilled /></a>
+        <a href="https://github.com/HytonightYX/auth-login" target="_blank">
+          <GithubFilled />
+        </a>
       </div>
     </div>
   );
