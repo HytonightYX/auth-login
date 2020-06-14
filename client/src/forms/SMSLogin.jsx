@@ -3,7 +3,11 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { MobileOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  MobileOutlined,
+  UserOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import './style.less';
 import api from '../api';
 import axios from 'axios';
@@ -13,6 +17,7 @@ const CODE_TTL = 60;
 const LoginForm = ({ doLogin, type }) => {
   const [seconds, setSeconds] = useState(0);
   const [phone, setPhone] = useState('');
+  const [pending, setPending] = useState(false);
   const interval = useRef();
 
   useEffect(() => {
@@ -35,8 +40,10 @@ const LoginForm = ({ doLogin, type }) => {
   };
 
   const getSmsCode = (phone) => {
+    setPending(true);
     axios.get(`${api.SMSCODE}?phone=${phone}`).then((res) => {
       console.log(res.data.data);
+      setPending(false);
       if (res && res.status === 200 && res.data.data.code === 0) {
         message.success(res.data.data.data);
         setSeconds(CODE_TTL);
@@ -76,8 +83,14 @@ const LoginForm = ({ doLogin, type }) => {
             placeholder="验证码"
           />
         </Form.Item>
-        <Button onClick={getSmsCode.bind(null, phone)} disabled={seconds > 0}>
-          {seconds > 0 ? `剩余 ${seconds} 秒` : '获取验证码'}
+        <Button onClick={getSmsCode.bind(null, phone)} disabled={pending || seconds > 0}>
+          {pending ? (
+            <LoadingOutlined />
+          ) : seconds > 0 ? (
+            `剩余 ${seconds} 秒`
+          ) : (
+            '获取验证码'
+          )}
         </Button>
       </div>
 

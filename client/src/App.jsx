@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Divider, message, Modal } from 'antd';
-import { MobileOutlined, UsbOutlined, LockOutlined } from '@ant-design/icons';
+import {
+  MobileOutlined,
+  UsbOutlined,
+  LockOutlined,
+  GithubFilled,
+} from '@ant-design/icons';
 
 import PWDLoginForm from './forms/PWDLogin';
 import SMSLoginForm from './forms/SMSLogin';
@@ -73,30 +78,29 @@ class Login extends React.Component {
         {type === LOGIN_TYPE.REG && <RegisterForm />}
 
         {type !== LOGIN_TYPE.REG && (
-          <div className="reg">
-            <a onClick={this.toRegister}>现在注册？</a>
-          </div>
-        )}
-
-        {type !== LOGIN_TYPE.REG && (
           <>
+            <div className="reg">
+              <a onClick={this.toRegister}>现在注册？</a>
+            </div>
+
             <Divider plain>
               <span style={{ color: '#d9d9d9', fontSize: 16 }}>or</span>
             </Divider>
+
             <div className="more">
-              <div onClick={this.toPWDLogin}>
+              <div onClick={this.toPWDLogin} className="more-btn">
                 <LockOutlined />
-                <span>口令登录</span>
+                <small>口令</small>
               </div>
 
-              <div onClick={this.toSMSLogin}>
+              <div onClick={this.toSMSLogin} className="more-btn">
                 <MobileOutlined />
-                <span>验证码</span>
+                <small>验证码</small>
               </div>
 
-              <div onClick={this.toUSBLogin}>
+              <div onClick={this.toUSBLogin} className="more-btn">
                 <UsbOutlined />
-                <span>USB Key</span>
+                <small>USB</small>
               </div>
             </div>
           </>
@@ -107,10 +111,13 @@ class Login extends React.Component {
 }
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
   return (
     <div className="g">
       <Login />
+
+      <div className="fix-bottom">
+        <a href="https://github.com/HytonightYX/auth-login" target="_blank" style={{fontSize: 26, color: '#333333'}}><GithubFilled /></a>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,12 @@
 import mToken from './longmai/mToken';
 
 const token = new mToken("mTokenPlugin");
+const CONTAINER = 'signContainer';
 
+/**
+ * 
+ * @param {string} type 设备类型,默认 GM3000
+ */
 function enumDevice(type = 'GM3000') {
   return new Promise((resolve, reject) => {
     const _errcode = token.SOF_LoadLibrary(token[type]);
@@ -32,8 +37,11 @@ function getUserList(deviceName) {
     const cerList = token.SOF_GetUserList();
 
     if (Array.isArray(cerList) && cerList[0] && cerList[0][1]) {
-      console.log('获取证书容器', cerList[0][1]);
-      resolve(cerList[0][1]);
+      const names = cerList[0];
+      if (!Array.isArray(names) || !names.includes(CONTAINER)) {
+        reject('非法用户,请注册');
+      }
+      resolve(CONTAINER);
     } else if (cerList == null) {
       reject("设备中无证书");
     } else {
@@ -45,7 +53,7 @@ function getUserList(deviceName) {
 /**
  * 获取数字证书
  * @param {Srting}} containerName 容器名称
- * @param {Srting} cerType 0=加密证书 1=签名证书
+ * @param {Srting} cerType 0: 加密证书 1: 签名证书
  */
 function exportUserCert(containerName, cerType = 1) {
   return new Promise((resolve, reject) => {
@@ -66,22 +74,51 @@ function getCertInfo(signCert) {
       Issuer: token.SOF_GetCertInfo(signCert, token.SGD_CERT_ISSUER_CN),
       Subject: token.SOF_GetCertInfo("", token.SGD_CERT_SUBJECT),
       Subject_CN: token.SOF_GetCertInfo("", token.SGD_CERT_SUBJECT_CN),
+      Container: CONTAINER,
       Subject_EMail: token.SOF_GetCertInfo("", token.SGD_CERT_SUBJECT_EMALL),
       Serial: token.SOF_GetCertInfo("", token.SGD_CERT_SERIAL),
-      CRLRLDistributionPoints: token.SOF_GetCertInfo("", token.SGD_CERT_CRL),
+      CRLDistributionPoints: token.SOF_GetCertInfo("", token.SGD_CERT_CRL),
       NotBefore: token.SOF_GetCertInfo("", token.SGD_CERT_NOT_BEFORE),
-      ValidTimeTo: token.SOF_GetCertInfo("", token.SGD_CERT_VALID_TIME)
+      ValidTimeTo: token.SOF_GetCertInfo("", token.SGD_CERT_VALID_TIME),
     };
-    
+
     console.log(certInfo);
+
     reslove(certInfo);
   });
+}
 
+/**
+ * 
+ * @param {string} cert 证书 Base64 编码
+ * @param {boolean} keySpec true 签名证书, false 加密证书
+ * @param {string} container 容器名称
+ */
+function importCert(cert, keySpec = true, container = CONTAINER,) {
+
+}
+
+/**
+ * 生成公私钥对
+ * @param {string} container 容器名称
+ * @param {number}} 长度
+ */
+function getKeyPair(container = CONTAINER, length = 256) {
+  return new Promise((resolve, reject) => {
+    const result = token.SOF_CreateKeyPair(container, true, token.SGD_SM2_1, length);
+    resolve(result);
+    if (result !== 0) {
+      reject("密钥生成失败");
+    } else {
+      reject("密钥生成成功");
+    }
+  });
 }
 
 export {
   enumDevice,
   getUserList,
   exportUserCert,
-  getCertInfo
+  getCertInfo,
+  getKeyPair
 };

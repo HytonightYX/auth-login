@@ -6,11 +6,17 @@ body {
 
 .g {
   height: 100vh;
+  min-height: 420px;
   width: 375px;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .fix-bottom {
+    position: fixed;
+    bottom: 10px;
+  }
 }
 
 .form-wrap {
@@ -51,29 +57,28 @@ body {
   align-items: center;
   justify-content: space-around;
 
-  span {
-    font-size: 8px;
-  }
-
-  div {
+  .more-btn {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     color: #8e8787;
-    font-size: 1em;
-
-    padding: 10px;
-    width: 54px;
+    padding: 5px;
+    width: 60px;
     text-align: center;
 
+    small {
+      font-size: 12px;
+    }
+
     svg {
-      font-size: 2.3em;
+      font-size: 20px;
     }
 
     cursor: pointer;
     border: #fff solid 1px;
   }
 
-  div:hover {
+  .more-btn:hover {
     border: #d9d9d9 solid 1px;
   }
 }

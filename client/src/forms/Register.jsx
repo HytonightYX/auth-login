@@ -1,14 +1,27 @@
 /**
  * 口令登陆
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, MobileOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  LockOutlined,
+  MobileOutlined,
+  UsbOutlined,
+} from '@ant-design/icons';
 import axios from 'axios';
+import SignUSB from './SignUSB';
 import api from '../api';
 import './style.less';
 
-const RegisterForm = ({ doLogin }) => {
+const RegisterForm = () => {
+  const [visible, setVisible] = useState(false);
+
+  const onSign = (values) => {
+    console.log('Received values of form: ', values);
+    setVisible(false);
+  };
+
   const onFinish = (values) => {
     axios.post(api.REGISTER, values).then((res) => {
       console.log(res);
@@ -73,10 +86,31 @@ const RegisterForm = ({ doLogin }) => {
       </Form.Item>
 
       <Form.Item>
+        <Button
+          className="login-form-button"
+          // onClick={() => {
+          //   setVisible(true);
+          // }}
+          onClick={() => window.open('https://crypto.hznuhub.net/')}
+        >
+          <UsbOutlined />
+          写入证书
+        </Button>
+      </Form.Item>
+
+      <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
           确认注册
         </Button>
       </Form.Item>
+
+      <SignUSB
+        visible={visible}
+        onSign={onSign}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
 
       <div>
         <a href="/">已有账号？去登录</a>
