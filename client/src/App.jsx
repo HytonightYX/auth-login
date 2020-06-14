@@ -19,7 +19,7 @@ const LOGIN_TYPE = {
 
 class Login extends React.Component {
   state = {
-    type: LOGIN_TYPE.SMS,
+    type: LOGIN_TYPE.USB,
   };
 
   toPWDLogin = () => {
@@ -40,7 +40,7 @@ class Login extends React.Component {
 
   success(content) {
     Modal.success({
-      content
+      content,
     });
   }
 
@@ -48,7 +48,7 @@ class Login extends React.Component {
     axios.post(api.LOGIN, params).then((res) => {
       if (res && res.status === 200 && res.data.code === 200) {
         const user = res.data.data;
-        this.success(`${user.username}, 登录成功`)
+        this.success(`${user.username}, 登录成功`);
       } else if (res.data) {
         message.error(`${res.data.msg}`);
       } else {

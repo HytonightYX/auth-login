@@ -2,19 +2,42 @@
  * USBKey 登陆
  */
 import React, { useState } from 'react';
-import { Form, Button, Spin } from 'antd';
+import { Form, Button, Spin, message, Typography, Modal } from 'antd';
 import { LoadingOutlined, UsbOutlined } from '@ant-design/icons';
-import { enumDevice } from '../lib';
+import { enumDevice, getUserList, exportUserCert, getCertInfo } from '../lib';
 import './style.less';
+
+const { Text, Link } = Typography;
 
 const LoginForm = ({ doLogin, type }) => {
   const [detecting, setDetecting] = useState(false);
 
-  const onFinish = async (values) => {
+  const onFinish = (values) => {
     console.log('Success:', values);
     setDetecting(true);
-    // doLogin({ ...values, type });
-    const id = await enumDevice();
+    enumDevice()
+      .then(getUserList)
+      .then(exportUserCert)
+      .then(getCertInfo)
+      .then(onSuccess)
+      .catch((e) => {
+        message.error(e.toString());
+        setDetecting(false);
+      });
+  };
+
+  const onSuccess = (certInfo) => {
+    const reactNode = Object.keys(certInfo).map((item) => (
+      <p key={item}>
+        {item} <Text mark>{certInfo[item]}</Text>
+      </p>
+    ));
+
+    Modal.success({
+      title: 'USB 识别成功',
+      content: <div>{reactNode}</div>,
+    });
+    setDetecting(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -40,8 +63,8 @@ const LoginForm = ({ doLogin, type }) => {
           {!detecting && (
             <Button
               type="primary"
-              htmlType="submit"
               className="login-form-button"
+              onClick={onFinish}
             >
               <UsbOutlined />
               检测USBKey并登录
