@@ -46,9 +46,13 @@ const smsCodeLogin = async (phone, code) => {
   throw new Error('验证码已过期或被使用');
 };
 
+/**
+ * 发送验证码
+ * @param {string} phone 手机号
+ */
 const sendSmsCode = async (phone) => {
   const res = await axios.get('https://crypto.hznuhub.net/dev-api/random/true/2');
-  let code = 'D2F1C41441C9';
+  let code = 'D2F1';
   if (res && res.status === 200 && res.data.code === 100) {
     code = res.data.data;
   }
@@ -64,7 +68,6 @@ const sendSmsCode = async (phone) => {
  */
 const userRegister = async (params) => {
   const { salt, hash } = generateAuth(params.password);
-  console.log(salt, hash);
   const userParams = {
     username: params.username,
     phone: params.phone,
@@ -73,7 +76,6 @@ const userRegister = async (params) => {
   };
 
   const result = await pool.query('INSERT INTO user SET ?', userParams);
-
   return result;
 };
 

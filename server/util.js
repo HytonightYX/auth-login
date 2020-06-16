@@ -1,8 +1,11 @@
 const crypto = require('crypto');
 const ZhenzismsClient = require('./zhenzisms');
 
+/**
+ * 生成 salt 和 hash
+ * @param {string} password 待哈希密码
+ */
 function generateAuth(password) {
-  console.log(password);
   const salt = crypto.randomBytes(32).toString('hex');
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha256').toString('hex');
   return { salt, hash };
